@@ -1,11 +1,13 @@
 ---
-title: "Raport"
+title: "Report - herring fish size data analysys"
 author: "Marcin Berendt"
 date: "13 grudnia 2016"
 output: html_document
 ---
 
-```{r setup, echo=FALSE, warning=FALSE}
+1.Kod wyliczaj¹cy wykorzystane biblioteki
+
+```{r setup,  warning=FALSE}
 library(knitr, warn.conflicts = FALSE)
 library(dplyr, warn.conflicts = FALSE)
 library(ggplot2, warn.conflicts = FALSE)
@@ -13,3 +15,18 @@ library(ggplot2, warn.conflicts = FALSE)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+3.Kod pozwalaj¹cy wczytaæ dane z pliku.
+
+```{r reading data from file to data.frame}
+sledzie <- read.csv("sledzie.csv")
+```
+
+4.Kod przetwarzaj¹cy brakuj¹ce dane
+```{r processing missing values}
+
+```
+
+5.Sekcjê podsumowuj¹c¹ rozmiar zbioru i podstawowe statystyki
+```{r summary section}
+knitr::kable(summary(sledzie))
+```

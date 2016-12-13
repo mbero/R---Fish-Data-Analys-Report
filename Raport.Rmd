@@ -30,3 +30,18 @@ sledzie <- read.csv("sledzie.csv")
 ```{r summary section}
 knitr::kable(summary(sledzie))
 ```
+
+6.Szczegó³ow¹ analizê wartoœci atrybutów 
+```{r distributed values analysis}
+str(sledzie)
+```
+
+7.Sekcjê sprawdzaj¹c¹ korelacje miêdzy zmiennymi; sekcja ta powinna zawieraæ jak¹œ formê graficznej prezentacji korelacji.
+
+
+8.Interaktywny wykres lub animacjê prezentuj¹c¹ zmianê rozmiaru œledzi w czasie.
+```{r changes in size trough time}
+dsamp <- sledzie[sample(nrow(sledzie), 1000), ]
+qplot(xmonth, length, data=dsamp)
+```
+

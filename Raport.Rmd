@@ -1,0 +1,15 @@
+---
+title: "Raport"
+author: "Marcin Berendt"
+date: "13 grudnia 2016"
+output: html_document
+---
+
+```{r setup, echo=FALSE, warning=FALSE}
+library(knitr, warn.conflicts = FALSE)
+library(dplyr, warn.conflicts = FALSE)
+library(ggplot2, warn.conflicts = FALSE)
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+

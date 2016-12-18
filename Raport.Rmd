@@ -11,7 +11,7 @@ output: html_document
 library(knitr, warn.conflicts = FALSE)
 library(dplyr, warn.conflicts = FALSE)
 library(ggplot2, warn.conflicts = FALSE)
-
+library(shiny)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -41,7 +41,8 @@ str(sledzie)
 
 8.Interaktywny wykres lub animacjê prezentuj¹c¹ zmianê rozmiaru œledzi w czasie.
 ```{r changes in size trough time}
-dsamp <- sledzie[sample(nrow(sledzie), 1000), ]
+sledzie_asc_xmonth  <- arrange(sledzie, xmonth)
+dsamp <- sledzie[sample(nrow(sledzie_asc_xmonth), 1000), ]
 qplot(xmonth, length, data=dsamp)
 ```
 

@@ -40,9 +40,16 @@ str(sledzie)
 
 
 8.Interaktywny wykres lub animacjê prezentuj¹c¹ zmianê rozmiaru œledzi w czasie.
+
+ggplot geom_bar 
 ```{r changes in size trough time}
 sledzie_asc_xmonth  <- arrange(sledzie, xmonth)
+
 dsamp <- sledzie[sample(nrow(sledzie_asc_xmonth), 1000), ]
-qplot(xmonth, length, data=dsamp)
+
+ggplot(sledzie_asc_xmonth, aes(x=xmonth, y=length)) + geom_bar(
+  stat="identity",
+  position=
+      "identity")
 ```
 

@@ -178,7 +178,13 @@ ggplot(data = sledzie,
 
 cor.test(sledzie$length, sledzie$sst)
 
+<<<<<<< HEAD
 
+=======
+# Analiza waznosci atrybutow najlepszego znalezionego modelu
+# Pyt "Co sprawia ze rozmiar sledzia zaczal w pewnym momencie malec"
+# Problem: Rozmiar sledzia pozostawal na podobnym poziomie, nie malal w czasie
+>>>>>>> fc68dc485aee52871f3fed4c66a6a45c594ec2ec
 
 
 

@@ -5,14 +5,12 @@ date: "13 grudnia 2016"
 output: html_document
 ---
 
-1.Kod wyliczaj¹cy wykorzystane biblioteki
-
-```{r setup,  warning=FALSE}
+###1.Kod wyliczaj¹cy wykorzystane biblioteki  
+```{r setup,  warning=FALSE, error=FALSE, echo=FALSE}
 library(knitr, warn.conflicts = FALSE)
 library(dplyr, warn.conflicts = FALSE)
 library(ggplot2, warn.conflicts = FALSE)
 library(shiny)
-
 library(tidyverse)
 library(gplots)
 library(rpart)
@@ -21,33 +19,30 @@ library(randomForest)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-3.Kod pozwalaj¹cy wczytaæ dane z pliku.
+###2.Kod pozwalaj¹cy wczytaæ dane z pliku    
 
 ```{r reading data from file to data.frame}
 sledzie <- read.csv("sledzie.csv")
 ```
 
-4.Kod przetwarzaj¹cy brakuj¹ce dane
+###3.Kod przetwarzaj¹cy brakuj¹ce dane  
 ```{r processing missing values}
 
 ```
 
-5.Sekcjê podsumowuj¹c¹ rozmiar zbioru i podstawowe statystyki
+###4.Sekcjê podsumowuj¹c¹ rozmiar zbioru i podstawowe statystyki  
 ```{r summary section}
 knitr::kable(summary(sledzie))
 ```
 
-6.Szczegó³ow¹ analizê wartoœci atrybutów 
+###5.Szczegó³ow¹ analizê wartoœci atrybutów  
 ```{r distributed values analysis}
 str(sledzie)
 ```
 
-7.Sekcjê sprawdzaj¹c¹ korelacje miêdzy zmiennymi; sekcja ta powinna zawieraæ jak¹œ formê graficznej prezentacji korelacji.
 
+###6.Interaktywny wykres lub animacjê prezentuj¹c¹ zmianê rozmiaru œledzi w czasie  
 
-8.Interaktywny wykres lub animacjê prezentuj¹c¹ zmianê rozmiaru œledzi w czasie.
-
-ggplot geom_bar 
 ```{r changes in size trough time}
 sledzie_asc_xmonth  <- arrange(sledzie, xmonth)
 
@@ -59,24 +54,32 @@ ggplot(sledzie_asc_xmonth, aes(x=xmonth, y=length)) + geom_bar(
       "identity")
 ```
 
+###7. Wczytanie danych i i przetworzenie brakujacych danych  
 ```{r}
-
-# 3. wczytanie danych i 4. przetworzenie brakuj¹cych danych
 sledzie <- read.csv("sledzie.csv", na.strings = "?")
-# sledzie <- sledzie[, -1] # usuwam pierwszy wiersz z numeracja wierszy od 0 do n-1
+```
+### 9. Podsumowanie rozmiaru danych i podstawowe statystyki  
 
-# 5. rozmiar zbioru i statystyki
+```{r data size and statistics}
 dim(sledzie)
 str(sledzie)
 summary(sledzie)
+```
 
-# sprawdz braki, ile ich jest
+### 10. Sprawdzenie iloœci brakuj¹cych elementów w zbiorze danych (liczbowo)  
+```{r checking how many missing values actually exists}
 apply(sledzie, 2, function(x) sum(is.na(x)))
 
-# sprawdz braki, jaki procent
-apply(sledzie, 2, function(x) sum(is.na(x))/length(x)) # ok 0,03%
+```
 
-# czym zastapic braki? moze srednia?
+### 11. Sprawdzenie iloœci brakuj¹cych elementów w zbiorze danych (procentowo)   
+```{r how many missing values - percentage}
+apply(sledzie, 2, function(x) sum(is.na(x))/length(x)) # ok 0,03%
+```
+
+### 12. Zast¹pienie brakuj¹cych elementóW œredni¹   
+
+```{r replacing missing values with average value}
 sledzie <- data.frame(apply(sledzie, 2, function(x) {
   ind <- which(is.na(x))
   srednia <- mean(x, na.rm = TRUE)
@@ -84,11 +87,16 @@ sledzie <- data.frame(apply(sledzie, 2, function(x) {
   x
 }))
 
-# a moze pominac i uzyc complete obs przy cor() lub sledzie <- na.omit(sledzie)
+```
+
+### 13.Zamiast zastapienia brakujacych wartosci srednia, mozna je takze pominac (alternatywne rozwiazanie) (uzycie uzyc complete obs przy cor() lub  sledzie <- na.omit(sledzie)    
+```{r avoiding missing values}
 sledzie <- na.omit(sledzie)
+```
 
+### 14. Prezentacja rozkladow wartoœci  
 
-# 6. prezentacja rozkladow wartosci
+```{r }
 for (i in colnames(sledzie)) {
   print(
     ggplot(data = sledzie,
@@ -99,9 +107,11 @@ for (i in colnames(sledzie)) {
       ggtitle(i)
   )
 }
+```
 
-# 7. korelacja miedzy zmiennymi
-# zmienne oprocz length nie maja rozkladu normalnego wobec czego stosuje wspolczynnik korelacji spearmana
+### 15. Pokazanie korelacji pomiêdzy poszczególnymi parametrami / zmiennymi  
+#### Zmienne oprocz 'length' nie maja rozk³adu normalnego. Zdecydowa³em siê wiêc na u¿ycie wspolczynnika korelacji spearmana  
+```{r}
 korelacja <- cor(sledzie, method = "spearman", use = "complete.obs")
 
 my_palette <- colorRampPalette(c("green", "black", "red"))(n = 30)
@@ -113,10 +123,10 @@ heatmap.2(korelacja,
           main = "Heatmapa korelacji",
           cellnote = round(korelacja, 2),
           notecol = "grey")
+```
+### 16. Wykres prezentuj¹cy zmianê rozmiaru sledzi w czasie  
 
-# 8. interaktywny wykres lub animacja prezentujaca zmiane rozmiaru sledzi w czasie
-# poki co wykres nieinteraktywny
-
+```{r}
 ggplot(data = sledzie,
        aes(x = X,
            y = length)) +
@@ -124,12 +134,14 @@ ggplot(data = sledzie,
   ggtitle("Wykres przedstawiajacy zmiane rozmiaru z³owionego œledzia w czasie") +
   geom_smooth()
 
+```
 
-# 9. regresor przewidujacy rozmiar sledzia
+### 17. Regresor przewidujacy rozmiar sledzia  
+```{r}
 fit <- lm(length ~ ., data = sledzie)
 summary(fit)
 
-# wyciagam R^2
+# Miara R^2
 summary(fit)$r.squared 
 
 # Function that returns Root Mean Squared Error
@@ -139,19 +151,19 @@ rmse <- function(error)
 }
 rmse(fit$residuals)
 
-# drzewo regresyjne
+# Drzewo regresyjne
 fit2 <- rpart(length ~ ., data = sledzie, method = "anova")
-printcp(fit2) # wyniki
-plotcp(fit2) # wizualizacja cross-validation
-print(fit2) # nudy
-summary(fit2) # podsumowanie splitow
+printcp(fit2) # Wyniki
+plotcp(fit2) # Wizualizacja cross-validation
+print(fit2) 
+summary(fit2) # Podsumowanie splitow
 par(mfrow = c(1, 2))
 rsq.rpart(fit2) # jak zmienia sie r^2 przy danej ilosci splitow
 par(mfrow = c(1, 1))
 plot(fit2, uniform = TRUE, main = "Drzewo regresji dla rozmiaru po³awianego œledzia")
 text(fit2, use.n = TRUE, cex = 1)
 
-# random forest
+# Random forest
 fit3 <- randomForest(length ~ ., data = na.omit(sledzie))
 print(fit3)
 waznosc <- importance(fit3)
@@ -163,7 +175,7 @@ ggplot(waznosc,
            y = wartosc)) +
   geom_bar(stat = "identity") +
   coord_flip() +
-  ggtitle("Waznosc zmiennych dla randomForest")
+  ggtitle("Okreœlenie wa¿noœci zmiennych dla randomForest")
 
 
 # najwazniejsza zmienna sst
@@ -176,5 +188,8 @@ ggplot(data = sledzie,
 
 cor.test(sledzie$length, sledzie$sst)
 
-
 ```
+
+### 18.Podsumowanie  
+#### Co sprawia, ¿e rozmiar œledzi zacz¹³ w pewnym momencie maleæ ?  
+Na podstawie powy¿szego raportu mo¿na zauwa¿yæ, ¿e zmienn¹ mog¹c¹ mieæ du¿y wp³yw na d³ugoœæ œledzia jest temperatura przy powierzchni wody.Wraz z jej wzrostem rozmiar œledzia zacz¹³ odczuwalnie maleæ. 

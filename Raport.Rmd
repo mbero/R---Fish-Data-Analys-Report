@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ###1.Kod wyliczaj¹cy wykorzystane biblioteki  
-```{r setup,  warning=FALSE, error=FALSE}
+```{r setup,  warning=FALSE, error=FALSE, echo=FALSE}
 library(knitr, warn.conflicts = FALSE)
 library(dplyr, warn.conflicts = FALSE)
 library(ggplot2, warn.conflicts = FALSE)
@@ -56,11 +56,7 @@ ggplot(sledzie_asc_xmonth, aes(x=xmonth, y=length)) + geom_bar(
 
 ###7. Wczytanie danych i i przetworzenie brakujacych danych  
 ```{r}
-
-# 3. wczytanie danych i 4. przetworzenie brakuj¹cych danych
 sledzie <- read.csv("sledzie.csv", na.strings = "?")
-# sledzie <- sledzie[, -1] # usuwam pierwszy wiersz z numeracja wierszy od 0 do n-1
-
 ```
 ### 9. Podsumowanie rozmiaru danych i podstawowe statystyki  
 
@@ -145,7 +141,7 @@ ggplot(data = sledzie,
 fit <- lm(length ~ ., data = sledzie)
 summary(fit)
 
-# wyciagam R^2
+# Miara R^2
 summary(fit)$r.squared 
 
 # Function that returns Root Mean Squared Error
@@ -155,19 +151,19 @@ rmse <- function(error)
 }
 rmse(fit$residuals)
 
-# drzewo regresyjne
+# Drzewo regresyjne
 fit2 <- rpart(length ~ ., data = sledzie, method = "anova")
-printcp(fit2) # wyniki
-plotcp(fit2) # wizualizacja cross-validation
-print(fit2) # nudy
-summary(fit2) # podsumowanie splitow
+printcp(fit2) # Wyniki
+plotcp(fit2) # Wizualizacja cross-validation
+print(fit2) 
+summary(fit2) # Podsumowanie splitow
 par(mfrow = c(1, 2))
 rsq.rpart(fit2) # jak zmienia sie r^2 przy danej ilosci splitow
 par(mfrow = c(1, 1))
 plot(fit2, uniform = TRUE, main = "Drzewo regresji dla rozmiaru po³awianego œledzia")
 text(fit2, use.n = TRUE, cex = 1)
 
-# random forest
+# Random forest
 fit3 <- randomForest(length ~ ., data = na.omit(sledzie))
 print(fit3)
 waznosc <- importance(fit3)
@@ -179,7 +175,7 @@ ggplot(waznosc,
            y = wartosc)) +
   geom_bar(stat = "identity") +
   coord_flip() +
-  ggtitle("Waznosc zmiennych dla randomForest")
+  ggtitle("Okreœlenie wa¿noœci zmiennych dla randomForest")
 
 
 # najwazniejsza zmienna sst
@@ -193,3 +189,7 @@ ggplot(data = sledzie,
 cor.test(sledzie$length, sledzie$sst)
 
 ```
+
+### 18.Podsumowanie  
+#### Co sprawia, ¿e rozmiar œledzi zacz¹³ w pewnym momencie maleæ ?  
+Na podstawie powy¿szego raportu mo¿na zauwa¿yæ, ¿e zmienn¹ mog¹c¹ mieæ du¿y wp³yw na d³ugoœæ œledzia jest temperatura przy powierzchni wody.Wraz z jej wzrostem rozmiar œledzia zacz¹³ odczuwalnie maleæ. 

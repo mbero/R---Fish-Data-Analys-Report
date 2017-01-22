@@ -98,37 +98,61 @@ sledzie <- na.omit(sledzie)
 
 ```{r }
 for (i in colnames(sledzie)) {
-  title <- "test"
-  if(i=="length"){
-    title <- "Fish length"
-  }
+  title <- ""
+
   if(i=="cfin1"){
-    title <- "Dostêpnoœæ planktonu (Calanus finmarchicus : type 1)"
+    title <- "Dostêpnoœæ planktonu (Calanus finmarchicus : gat 1)"
   }
   if(i=="cfin2"){
-    title <- "Dostêpnoœæ planktonu (Calanus finmarchicus : type 2)"
+    title <- "Dostêpnoœæ planktonu (Calanus finmarchicus : gat 2)"
   }
   if(i=="chel1"){
-    title <- "Dostêpnoœæ planktonu (Calanus helgolandicus  : type 1)"
+    title <- "Dostêpnoœæ planktonu (Calanus helgolandicus  : gat 1)"
   }
   if(i=="chel2"){
-    title <- "Dostêpnoœæ planktonu (Calanus helgolandicus  : type 2)"
+    title <- "Dostêpnoœæ planktonu (Calanus helgolandicus  : gat 2)"
   }
   if(i=="lcop1"){
-    title <- "Fish length"
+    title <- "Dostêpnoœæ planktonu (Zagêszczenie wid³onogów : gat 1)"
   }
   if(i=="lcop2"){
-    title <- "Fish length"
+    title <- "Dostêpnoœæ planktonu (Zagêszczenie wid³onogów : gat 2"
   }
-  print(
-    ggplot(data = sledzie,
-           aes_string(
-             x = i
-           )) +
-      geom_density(fill = "lightskyblue") +
-      ggtitle(i)
-      #Dodaj dok³adniejsze tytuly 
-  )
+   if(i=="fbar"){
+    title <- "Natê¿enie po³owów w regionie (u³amek pozostawionego narybku)"
+   }
+   if(i=="recr"){
+    title <- "Roczny narybek (liczba œledzi)"
+   }
+   if(i=="cumf"){
+    title <- "£¹czne roczne natê¿enie po³owów w regionie (u³amek pozostawionego narybku)"
+   }
+   if(i=="totaln"){
+    title <- "£¹czna liczba ryb z³owionych w ramach po³owu (liczba œledzi)"
+   }
+   if(i=="sst"){
+    title <- "Temperatura przy powierzchni wody (°C)"
+   }
+   if(i=="sal"){
+    title <- "Poziom zasolenia wody (Knudsen ppt)"
+   }
+    if(i=="xmonth"){
+    title <- "Miesi¹c po³owu (numer miesi¹ca)"
+    }
+    if(i=="nao"){
+      title <- "Oscylacja pó³nocnoatlantycka (mb)"
+    }
+    if(title!=""){
+        print(
+          ggplot(data = sledzie,
+                 aes_string(
+                   x = i
+                 )) +
+            geom_density(fill = "lightskyblue") +
+            ggtitle(title)
+            #Dodaj dok³adniejsze tytuly 
+        )
+    }
 }
 ```
 
@@ -201,7 +225,6 @@ ggplot(waznosc,
   ggtitle("Okreœlenie wa¿noœci zmiennych dla randomForest")
 
 
-# najwazniejsza zmienna sst
 # rysuje scatterplot
 ggplot(data = sledzie,
        aes(x = length,

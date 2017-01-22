@@ -98,6 +98,28 @@ sledzie <- na.omit(sledzie)
 
 ```{r }
 for (i in colnames(sledzie)) {
+  title <- "test"
+  if(i=="length"){
+    title <- "Fish length"
+  }
+  if(i=="cfin1"){
+    title <- "Dostêpnoœæ planktonu (Calanus finmarchicus : type 1)"
+  }
+  if(i=="cfin2"){
+    title <- "Dostêpnoœæ planktonu (Calanus finmarchicus : type 2)"
+  }
+  if(i=="chel1"){
+    title <- "Dostêpnoœæ planktonu (Calanus helgolandicus  : type 1)"
+  }
+  if(i=="chel2"){
+    title <- "Dostêpnoœæ planktonu (Calanus helgolandicus  : type 2)"
+  }
+  if(i=="lcop1"){
+    title <- "Fish length"
+  }
+  if(i=="lcop2"){
+    title <- "Fish length"
+  }
   print(
     ggplot(data = sledzie,
            aes_string(
@@ -105,6 +127,7 @@ for (i in colnames(sledzie)) {
            )) +
       geom_density(fill = "lightskyblue") +
       ggtitle(i)
+      #Dodaj dok³adniejsze tytuly 
   )
 }
 ```
@@ -137,7 +160,7 @@ ggplot(data = sledzie,
 ```
 
 ### 17. Regresor przewidujacy rozmiar sledzia  
-```{r}
+```{r cache=TRUE}
 fit <- lm(length ~ ., data = sledzie)
 summary(fit)
 
@@ -192,4 +215,5 @@ cor.test(sledzie$length, sledzie$sst)
 
 ### 18.Podsumowanie  
 #### Co sprawia, ¿e rozmiar œledzi zacz¹³ w pewnym momencie maleæ ?  
-Na podstawie powy¿szego raportu mo¿na zauwa¿yæ, ¿e zmienn¹ mog¹c¹ mieæ du¿y wp³yw na d³ugoœæ œledzia jest temperatura przy powierzchni wody.Wraz z jej wzrostem rozmiar œledzia zacz¹³ odczuwalnie maleæ. 
+
+Na podstawie powy¿szego raportu mo¿na zauwa¿yæ, ¿e zmienn¹ maj¹c¹ decyduj¹cy wp³yw na d³ugoœæ œledzia jest temperatura przy powierzchni wody. Wraz ze wzrostem temperatury - spada³ rozmiar œledzia.

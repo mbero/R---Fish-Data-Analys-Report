@@ -105,6 +105,7 @@ for (i in colnames(sledzie)) {
            )) +
       geom_density(fill = "lightskyblue") +
       ggtitle(i)
+      #Dodaj dok³adniejsze tytuly 
   )
 }
 ```
@@ -137,7 +138,7 @@ ggplot(data = sledzie,
 ```
 
 ### 17. Regresor przewidujacy rozmiar sledzia  
-```{r}
+```{r cache=TRUE}
 fit <- lm(length ~ ., data = sledzie)
 summary(fit)
 
@@ -192,4 +193,5 @@ cor.test(sledzie$length, sledzie$sst)
 
 ### 18.Podsumowanie  
 #### Co sprawia, ¿e rozmiar œledzi zacz¹³ w pewnym momencie maleæ ?  
-Na podstawie powy¿szego raportu mo¿na zauwa¿yæ, ¿e zmienn¹ mog¹c¹ mieæ du¿y wp³yw na d³ugoœæ œledzia jest temperatura przy powierzchni wody.Wraz z jej wzrostem rozmiar œledzia zacz¹³ odczuwalnie maleæ. 
+
+Na podstawie powy¿szego raportu mo¿na zauwa¿yæ, ¿e zmienn¹ maj¹c¹ decyduj¹cy wp³yw na d³ugoœæ œledzia jest temperatura przy powierzchni wody. Wraz ze wzrostem temperatury - spada³ rozmiar œledzia.

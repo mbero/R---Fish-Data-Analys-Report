@@ -98,6 +98,28 @@ sledzie <- na.omit(sledzie)
 
 ```{r }
 for (i in colnames(sledzie)) {
+  title <- "test"
+  if(i=="length"){
+    title <- "Fish length"
+  }
+  if(i=="cfin1"){
+    title <- "Dostêpnoœæ planktonu (Calanus finmarchicus : type 1)"
+  }
+  if(i=="cfin2"){
+    title <- "Dostêpnoœæ planktonu (Calanus finmarchicus : type 2)"
+  }
+  if(i=="chel1"){
+    title <- "Dostêpnoœæ planktonu (Calanus helgolandicus  : type 1)"
+  }
+  if(i=="chel2"){
+    title <- "Dostêpnoœæ planktonu (Calanus helgolandicus  : type 2)"
+  }
+  if(i=="lcop1"){
+    title <- "Fish length"
+  }
+  if(i=="lcop2"){
+    title <- "Fish length"
+  }
   print(
     ggplot(data = sledzie,
            aes_string(
